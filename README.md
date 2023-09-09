@@ -1,6 +1,6 @@
-# electron-nextjs-sample-2023
+# IPManager-with-Electron-NextJS
 
-Example or boilerplate of [electron](https://www.electronjs.org/) app project.
+Electron app is rendered by NextJS with App router
 
 using:
 
