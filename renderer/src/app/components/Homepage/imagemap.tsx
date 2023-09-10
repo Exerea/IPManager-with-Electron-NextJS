@@ -34,10 +34,10 @@ const ImageMap: React.FC = () => {
     };
 
     return (
-        <div className="flex flex-col h-screen bg-sumi-800">
+        <div className="flex-grow flex flex-col h-full bg-sumi-800">
             {/* NOTE : viewBox > care for Div Size */}
             {/* 3840-56(h-14)-80(h-20) = 3716 */}
-            <svg width="100%" height="100%" viewBox="0 0 5120 3840" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg className="absolute top-0 left-0 w-full h-full object-cover" viewBox="0 0 5120 3840" fill="none" xmlns="http://www.w3.org/2000/svg">
 
                 <rect x="2003" y="1961" width="100" height="76" rx="19" transform="rotate(-180 2003 1961)" fill="#007BFF" stroke="#00274C" strokeWidth="4" />
                 <path d="M2002.51 1890.24C2009.25 1890.71 2015 1885.37 2015 1878.61C2015 1872.2 2009.8 1867 2003.39 1867L1902.61 1867C1896.2 1867 1891 1872.2 1891 1878.61C1891 1885.37 1896.75 1890.71 1903.49 1890.24C1916.34 1889.35 1938.29 1888 1953 1888C1967.71 1888 1989.66 1889.35 2002.51 1890.24Z" fill="#007BFF" stroke="#00274C" strokeWidth="4" />

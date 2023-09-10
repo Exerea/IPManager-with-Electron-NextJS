@@ -60,7 +60,6 @@ const Form = () => {
 
         // バックティックを使用してテンプレートリテラルを正しく展開
         const urlString = `/api/registration_ip?${params.toString()}`;
-
         const response = await fetch(urlString, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' }
@@ -68,7 +67,6 @@ const Form = () => {
 
 
 
-        const data = await response.json();
         setIsAnimating(true);
 
         setPopMessage1("regist");

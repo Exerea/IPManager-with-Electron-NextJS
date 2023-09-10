@@ -3,9 +3,9 @@ import React from 'react';
 const Header = () => {
 
     return (
-        <div id="draggable-area" style={{ WebkitAppRegion: 'drag', height: '30px' } as any}>
-            <header className='w-full h-14 bg-sumi-900'></header>
-        </div>
+        <header id="draggable-area" className='w-full h-8 bg-sumi-900 ' style={{ WebkitAppRegion: 'drag' } as any}>
+            &nbsp;{/* <header className='w-full h-8 bg-sumi-900'></header> */}
+        </header>
     );
 }
 

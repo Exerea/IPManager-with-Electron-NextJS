@@ -14,14 +14,14 @@ const Page = () => {
     <StrictMode>
       <RecoilRoot>
 
-        <div className="flex flex-col h-screen bg-sumi-500">
+        <div className="flex flex-col h-screen bg-sumi-500 overflow-hidden">
           <Header></Header>
 
-          <div className="relative ">
+          <div className="flex-grow flex flex-col relative ">
             <Activation></Activation>
             <ImageMap></ImageMap>
-            <Footer></Footer>
           </div>
+          <Footer></Footer>
 
         </div>
       </RecoilRoot>

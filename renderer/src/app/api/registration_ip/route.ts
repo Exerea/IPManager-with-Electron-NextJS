@@ -2,9 +2,8 @@ import { NextResponse } from "next/server";
 import fs from "fs";
 import { NextApiRequest } from "next";
 
-export async function POST(req: any) {
+export async function POST(req: NextApiRequest) {
     const errorMEssage = "値が未入力";
-
     //有効な値であるか確認する
     if (!req.url) {
         return NextResponse.json({ message: errorMEssage });

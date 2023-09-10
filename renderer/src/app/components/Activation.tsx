@@ -38,7 +38,8 @@ const Message = () => {
   return (
 
     <motion.div
-      className="w-full h-full bg-sumi-900 text-center text-white absolute top-0 left-0 pointer-events-none"
+
+      className="flex-grow w-full h-full z-10 bg-sumi-900 text-center text-white absolute top-0 left-0 pointer-events-none"
       initial="initial"　//初期状態
       animate={isAnimating ? "animate" : "initial"} //表示イベント順
       variants={variants}//お約束
