@@ -27,7 +27,7 @@ if not "!availableIP!"=="none" (
     echo !availableIP! > result.txt
 )else{
     REM for Nodejs
-    echo 接続可能なアドレスがない > result.txt
+    echo Not found available IP Adress > result.txt
 }
 
 
