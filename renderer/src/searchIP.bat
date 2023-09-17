@@ -1,47 +1,63 @@
-@REM @echo off
+@echo off
 setlocal enabledelayedexpansion
 
-:: Search IP Area
-set "base_ip=192.168.11."
-set "subnetmask=255.255.255.0"
-set "defaultNetWork=192.168.11.1"
-set "INTERFACE=イーサネット 2"
+REM Search Area
+	set "base_ip=10.62.31."
+	set "subnetmask=255.255.255.0"
+	set "defaultNetWork=10.62.31.254"
+	set "INTERFACE=%0"
 
-::Loop to find Available IP Adess for ping sweeping
-for /l %%i in (9, 1, 11) do (
+REM Loop to find Available IP Adess for ping sweeping
+	for /l %%i in (2, 1, 254) do (
+
+	echo ***************************************************
 	echo ***************************************************
 
-    	set "current_ip=%base_ip%%%i"
-echo gu
-	echo 	IP ADDRESS		: !current_ip! 
-	set nowip=!current_ip!
-    
-    	:: Ping check
-	ping -n 1 !current_ip! | find "TTL=" > nul
-	echo 	ERROR LEVEL		: !errorlevel!
+    	set "current=%base_ip%%%i"
+	echo		IP ADDRESS		:	!current! 
 
-    ::NOTE errorlevel=0:no reponses
-   if !errorlevel! neq 0 (
+    	:: Ping check
+	ping -n 1 !current! | find "TTL=" > nul
+	echo 	ERROR LEVEL		: 	!errorlevel!
+	
+	::NOTE errorlevel=0:no reponses
+	if !errorlevel! neq 0 (
 	
 	echo --------------------------------------------------
-	echo Passed Ping Check
-	echo Trying netsh ...
-       ::try to connect the address
-        netsh interface ip set address %INTERFACE% static !nowip! %subnetmask% %defaultNetWork%  > output.txt 2>&1
+	echo 	Passed Ping Check
+	echo 	Trying netsh ...
+
+	netsh interface ip set address name="イーサネット" static !current! %subnetmask% %defaultNetWork%
+
+	:: Get New Address
+	for /f "tokens=2 delims=:" %%b in ('ipconfig ^| find "IPv4 アドレス"') do (
+		set CURRENT_IP=%%b
+	)
+
+	:: Sanitize
+	set CURRENT_IP=%CURRENT_IP:~1%
+
+
+	::try to connect the address
+	REM netsh interface ip set address "イーサネット" static !current! %subnetmask% %defaultNetWork% > output.txt 2>&1
 
         ::no error
-        if !ERRORLEVEL! neq 0 (
-	echo Passed Connection
-        :: for Nodejs
-        echo !current_ip! > result.txt
-	goto :end
+        if !ERRORLEVEL! equ 0 (
+		if "!current!" neq "%CURRENT_IP%" (
+			echo 	Passed Connection
+        		:: for Nodejs
+        		echo !current! > result.txt
+			goto :end
+		)
         )
 	
 	echo --------------------------------------------------
-	echo Couldnt connect		: %INTERFACE% , !current_ip! , %subnetmask% , %defaultNetWork%
+	echo 	Couldnt connect		: %INTERFACE% , !current! , %subnetmask% , %defaultNetWork%
+
     	) else (
+	
 	echo --------------------------------------------------
-	echo Already Used 		: %INTERFACE% , !current_ip! , %subnetmask% , %defaultNetWork%
+	echo 	Already Used 		: %INTERFACE% , !current! , %subnetmask% , %defaultNetWork%
 	)
 )
 echo Not found > result.txt
