@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
-import { exec, execSync } from "child_process";
-import * as path from "path";
+import { execSync } from "child_process";
 import * as fs from "fs";
 import * as yaml from "js-yaml";
 
@@ -8,6 +7,7 @@ import * as yaml from "js-yaml";
 // インターフェースを定義
 interface Settings {
     "user-info": {
+        interface: string;
         ip: string;
         snm: string;
         dgw: string;
@@ -15,30 +15,20 @@ interface Settings {
 }
 
 export async function POST(request: Request) {
-    const configFile = path.resolve(
-        __dirname,
-        "..",
-        "..",
-        "..",
-        "..",
-        "..",
-        "setting.yml"
-    );
+    const path = require("path");
+
+    const configFile = path.resolve("./setting.yml");
     var fileContents = fs.readFileSync(configFile, "utf8");
     const config: Settings = yaml.load(fileContents) as Settings;
-    const ip1 = config["user-info"].ip;
-    console.log(ip1);
+    const data = config["user-info"];
 
     // バッチファイルを実行するコマンドを格納
-    const command =
-        `start cmd.exe /K ` +
-        ` set INTERFACE=イーサネット &&` +
-        ` set availableIP=none &&` +
-        ` changeIP.bat ${ip1} ${ip1} ${ip1}`;
-    console.log(command);
+    const command = `${path.resolve("./src/changeIP.bat")} ${data.interface} ${
+        data.ip
+    } ${data.ip} ${data.ip} ${data.snm} ${data.dgw}`;
     execSync(command);
 
-    //resultにどのIPか設定されている
+    //export changed IP
     const result = fs.readFileSync("result.txt", "utf8");
     return NextResponse.json(result);
 }
