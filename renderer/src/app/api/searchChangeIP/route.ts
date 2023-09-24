@@ -20,12 +20,8 @@ interface Settings {
 }
 
 export async function POST(request: Request) {
-    console.log("hi");
     // バッチファイルを実行するコマンドを格納
-    const command =
-        "start cmd.exe /K " +
-        '"echo hello && set INTERFACE=イーサネット && searchIP.bat"';
-
+    const command = '"set INTERFACE=イーサネット && searchIP.bat"';
     execSync(command);
 
     //resultにどのIPか設定されている
