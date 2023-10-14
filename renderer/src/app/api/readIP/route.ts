@@ -14,15 +14,7 @@ interface Settings {
 }
 
 export async function POST(request: Request) {
-    const configFile = path.resolve(
-        __dirname,
-        "..",
-        "..",
-        "..",
-        "..",
-        "..",
-        "setting.yml"
-    );
+    const configFile = path.resolve("./setting.yml");
     var fileContents = fs.readFileSync(configFile, "utf8");
     const config: Settings = yaml.load(fileContents) as Settings;
 

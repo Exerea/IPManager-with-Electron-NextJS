@@ -1,21 +1,11 @@
-import type {
-  SendExampleHandler,
-  InvokeExampleHandler,
-} from '@main/lib/handler';
-import type {
-  AddListenerExample,
-  RemoveListenerExample,
-} from '@main/lib/events';
+import type { SendExampleHandler } from "@main/lib/handler";
 
 export interface IElectronAPI {
-  readonly sendExample: SendExampleHandler;
-  readonly invokeExample: InvokeExampleHandler;
-  readonly addListenerExample: AddListenerExample;
-  readonly removeListenerExample: RemoveListenerExample;
+    readonly sendExample: SendExampleHandler;
 }
 
 declare global {
-  interface Window {
-    readonly electronAPI: IElectronAPI;
-  }
+    interface Window {
+        readonly electronAPI: IElectronAPI;
+    }
 }

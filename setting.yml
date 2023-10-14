@@ -1,0 +1,18 @@
+common-ip:
+  conference-room1:
+    ip1: 10.62.31.1
+    ip2: 10.62.31.1
+    ip3: 10.62.31.1
+  conference-room2:
+    ip1: 10.62.31.1
+    ip2: 10.62.31.1
+    ip3: 10.62.31.1
+  conference-room3:
+    ip1: 10.62.31.1
+    ip2: 10.62.31.1
+    ip3: 10.62.31.1
+user-info:
+  ip: '454654562121'
+  snm: 10.62.31.12
+  dgw: 10.62.31.12
+teams: C:\Program Files (x86)\Microsoft\Teams\current\Teams.exe

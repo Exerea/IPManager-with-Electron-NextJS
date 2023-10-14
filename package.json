@@ -35,8 +35,9 @@
     },
     "asar": true,
     "files": [
-      "main",
-      "renderer/out"
+      "./main",
+      "renderer/out",
+      "./setting.yml"
     ],
     "linux": {
       "executableName": "IPManager"

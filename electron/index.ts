@@ -5,23 +5,17 @@ import { join } from "node:path";
 import { BrowserWindow, app, ipcMain, session, shell } from "electron";
 
 // Own Libraries
-import {
-    exampleChannel1,
-    exampleChannel2,
-    exampleChannel3,
-} from "./lib/channels";
-import { invokeExampleHandler, sendExampleHandler } from "./lib/handler";
-import { registerExampleEvent } from "./lib/events";
+import { exampleChannel1 } from "./lib/channels";
+import { sendExampleHandler } from "./lib/handler";
 import { registerProtocol, protocolInfo } from "./lib/custom-protocol";
-import { setMenu } from "./lib/menu";
 
-// get app version
+//package.jsonからバージョン情報の取得
 import {
     version as applicationVersion,
     name as applicationName,
 } from "../package.json";
 
-// about panel
+//アプリケーション情報
 app.setAboutPanelOptions({
     applicationName,
     applicationVersion,
@@ -29,9 +23,10 @@ app.setAboutPanelOptions({
     copyright: "©2023 T.Tat", // EDIT
 });
 
-/** url of nextjs development server */
+//Next.js開発環境
 const devServerUrl = "http://localhost:3000";
 
+//MPA IPC待ち受け
 registerProtocol({
     directory: "renderer/out",
 });
@@ -51,6 +46,7 @@ app.on("ready", async () => {
         });
     });
 
+    //ElectronアプリケーションWindowの設定
     const mainWindow = new BrowserWindow({
         width: 1024,
         height: 768,
@@ -61,30 +57,26 @@ app.on("ready", async () => {
             symbolColor: "#7096F8",
         },
         webPreferences: {
-            nodeIntegration: false,
-            contextIsolation: false,
+            // nodeIntegration: true,
+            // contextIsolation: false,
             preload: join(__dirname, "preload.js"),
+            devTools: true,
         },
     });
 
+    //開発者ツールの許可
+    mainWindow.webContents.openDevTools();
+
+    //Window展開先
     if (app.isPackaged) {
-        // production
-        // await loadURL(mainWindow);
         await mainWindow.loadURL(protocolInfo.origin);
     } else {
         // development
         await mainWindow.loadURL(devServerUrl);
     }
-
-    // set menu
-    setMenu();
-
-    const contents = mainWindow.webContents;
-
-    registerExampleEvent({ contents, channel: exampleChannel3 });
 });
 
-// Quit the app once all windows are closed
+//Window閉じた時アプリを終了する
 app.on("window-all-closed", app.quit);
 
 // Open OS browser for external url
@@ -125,6 +117,3 @@ app.on("web-contents-created", (_event, contents) => {
 
 // example of send from renderer
 ipcMain.on(exampleChannel1, sendExampleHandler);
-
-// example of invoke from renderer
-ipcMain.handle(exampleChannel2, invokeExampleHandler);

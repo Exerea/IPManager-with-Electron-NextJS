@@ -1,6 +1,5 @@
-
+'use client';
 import { animationState, messageState1 } from '../../../app/state/AnimationState';
-import { type } from 'os';
 import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { useRecoilState } from 'recoil';
@@ -50,28 +49,6 @@ const Form = () => {
     const [isAnimating, setIsAnimating] = useRecoilState(animationState);
     const [popMessage1, setPopMessage1] = useRecoilState(messageState1);
 
-
-    const process = async (ip: string, snm: string, dgw: string) => {
-
-        const params = new URLSearchParams();
-        params.append('IPAdress', ip);
-        params.append('Subnetmask', snm);
-        params.append('DefaultGateWay', dgw);
-
-        // バックティックを使用してテンプレートリテラルを正しく展開
-        const urlString = `/api/registration_ip?${params.toString()}`;
-        const response = await fetch(urlString, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' }
-        });
-
-
-
-        setIsAnimating(true);
-
-        setPopMessage1("regist");
-    };
-
     //値の変更を検知してフォームに保持する
     const changeIP = (e: any) => {
         setIP(() => e.target.value)
@@ -82,6 +59,17 @@ const Form = () => {
     const changeDGW = (e: any) => {
         setDGW(() => e.target.value)
     }
+
+    /**
+     * Electron上でfs.writeで登録
+     * @param e マウスイベント
+     */
+    const registration = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        window.electronAPI.sendExample(ip, snm, dgw);
+        setIsAnimating(true);
+        setPopMessage1("Now Registing...");
+    };
 
     return (
         <div className={`text-white font-bold py-6 px-9 bg-gray-800 rounded-lg col-span-6`}>
@@ -103,7 +91,7 @@ const Form = () => {
                 <input type="text" value={dgw} onChange={changeDGW} className="w-full border border-sea rounded py-1 px-4 text-sumi-800" />
             </div>
 
-            <button onClick={() => process(ip, snm, dgw)} className="w-full bg-sea text-white py-2 mt-6 mb-4 rounded hover:bg-sea-800 focus:outline-none focus:shadow-outline">変更</button>
+            <button onClick={registration} className="w-full bg-sea text-white py-2 mt-6 mb-4 rounded hover:bg-sea-800 focus:outline-none focus:shadow-outline">変更</button>
 
         </div>
     )
