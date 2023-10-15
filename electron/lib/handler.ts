@@ -1,11 +1,11 @@
-import { type IpcMainEvent } from "electron";
+import { IpcMainInvokeEvent, type IpcMainEvent } from "electron";
 import fs from "fs";
 import path from "path";
 import { exec } from "child_process";
 
 type HandlerWithEvent<
     F extends (...args: never[]) => unknown,
-    Event extends IpcMainEvent
+    Event extends IpcMainEvent | IpcMainInvokeEvent
 > = (event: Event, ...args: Parameters<F>) => ReturnType<F>;
 
 //-------------------------------------------------------------------------------------
@@ -90,4 +90,34 @@ export const sendExampleHandler: SendExampleHandlerWithEvent = (
 
     // ファイルの書き込み
     fs.writeFileSync(settingPath, updatedYAML, "utf8");
+};
+
+//-------------------------------------------------------------------------------------
+
+type Data = {
+    ipAdress: string;
+    subnetMask: string;
+    defaultGateWay: string;
+};
+
+export type ReadParamsHandler = (arg: {
+    readonly message: string;
+}) => Promise<Data>;
+
+type ReadParamsHandlerWithEvent = HandlerWithEvent<
+    ReadParamsHandler,
+    IpcMainInvokeEvent
+>;
+
+export const readParamsHandler: ReadParamsHandlerWithEvent = async (
+    _event,
+    { message }
+) => {
+    console.log(`message from renderer invoke: ${message}`);
+    const response: Data = {
+        ipAdress: "test",
+        subnetMask: "test",
+        defaultGateWay: "test",
+    };
+    return response;
 };

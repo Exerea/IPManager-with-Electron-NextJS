@@ -5,8 +5,16 @@ import { join } from "node:path";
 import { BrowserWindow, app, ipcMain, session, shell } from "electron";
 
 // Own Libraries
-import { exampleChannel1, rebootChannel } from "./lib/channels";
-import { rebootTeamsHandler, sendExampleHandler } from "./lib/handler";
+import {
+    exampleChannel1,
+    readParamsChannnel,
+    rebootChannel,
+} from "./lib/channels";
+import {
+    readParamsHandler,
+    rebootTeamsHandler,
+    sendExampleHandler,
+} from "./lib/handler";
 import { registerProtocol, protocolInfo } from "./lib/custom-protocol";
 
 //package.jsonからバージョン情報の取得
@@ -118,3 +126,4 @@ app.on("web-contents-created", (_event, contents) => {
 // example of send from renderer
 ipcMain.on(exampleChannel1, sendExampleHandler);
 ipcMain.on(rebootChannel, rebootTeamsHandler);
+ipcMain.handle(readParamsChannnel, readParamsHandler);

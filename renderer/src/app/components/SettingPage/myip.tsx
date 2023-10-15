@@ -7,42 +7,30 @@ import { useRecoilState } from 'recoil';
 
 const Form = () => {
 
-
     const [ip, setIP] = useState("");
     const [snm, setSNM] = useState("");
     const [dgw, setDGW] = useState("");
 
-
+    /**
+     * Electron上でfs.writeで登録
+     */
+    const readingParams = async () => {
+        // e.preventDefault();
+        // const settingValues = await window.electronAPI.readParams();
+        setIP("");//settingValues.ipAdress);
+        setSNM("");//settingValues.subnetMask");
+        setDGW("");//settingValues.defaultGateWay");
+    };
 
     useEffect(() => {
-        // 非同期処理を行う関数
+        console.log("useeffect");
+        // useEffect内での非同期処理のパターン
         const fetchData = async () => {
-            try {
-                const urlString = `/api/readIP`;
-                const response = await fetch(urlString, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' }
-                });
-
-                if (!response.ok) {
-                    throw new Error(`API request failed with status ${response.status}`);
-                }
-
-                const data = await response.json();
-                setIP(data.ip);
-                setSNM(data.snm);
-                setDGW(data.dgw);
-
-            } catch (error) {
-                console.error("Failed to fetch data:", error);
-            }
+            await readingParams();
         };
 
-        // 非同期処理を呼び出し
         fetchData();
     }, []);
-
-
 
 
     //アニメーションセット
