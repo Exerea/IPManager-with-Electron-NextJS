@@ -1,12 +1,31 @@
 import { contextBridge, ipcRenderer } from "electron";
-import { exampleChannel1, rebootChannel } from "./lib/channels";
+import {
+    exampleChannel1,
+    changeConf01Channel,
+    changeConf02Channel,
+    changeConf03Channel,
+    changeYourIPChannel,
+    rebootChannel,
+} from "./lib/channels";
 
 contextBridge.exposeInMainWorld("electronAPI", {
     sendExample: (...args: readonly unknown[]): void => {
         ipcRenderer.send(exampleChannel1, ...args);
     },
+    changeConf01: (...args: readonly unknown[]): void => {
+        ipcRenderer.send(changeConf01Channel, ...args);
+    },
+    changeConf02: (...args: readonly unknown[]): void => {
+        ipcRenderer.send(changeConf02Channel, ...args);
+    },
+    changeConf03: (...args: readonly unknown[]): void => {
+        ipcRenderer.send(changeConf03Channel, ...args);
+    },
+    changeYourIP: (...args: readonly unknown[]): void => {
+        ipcRenderer.send(changeYourIPChannel, ...args);
+    },
+
     rebootTeams: (...args: readonly unknown[]): void => {
-        console.log("rebootTeams");
         ipcRenderer.send(rebootChannel, ...args);
     },
 });

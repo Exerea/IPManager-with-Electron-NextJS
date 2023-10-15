@@ -6,11 +6,19 @@ import { BrowserWindow, app, ipcMain, session, shell } from "electron";
 
 // Own Libraries
 import {
+    changeConf01Channel,
+    changeConf02Channel,
+    changeConf03Channel,
+    changeYourIPChannel,
     exampleChannel1,
     readParamsChannnel,
     rebootChannel,
 } from "./lib/channels";
 import {
+    changeConf01Handler,
+    changeConf02Handler,
+    changeConf03Handler,
+    changeYourIPHandler,
     readParamsHandler,
     rebootTeamsHandler,
     sendExampleHandler,
@@ -125,5 +133,9 @@ app.on("web-contents-created", (_event, contents) => {
 
 // example of send from renderer
 ipcMain.on(exampleChannel1, sendExampleHandler);
+ipcMain.on(changeConf01Channel, changeConf01Handler);
+ipcMain.on(changeConf02Channel, changeConf02Handler);
+ipcMain.on(changeConf03Channel, changeConf03Handler);
+ipcMain.on(changeYourIPChannel, changeYourIPHandler);
 ipcMain.on(rebootChannel, rebootTeamsHandler);
 ipcMain.handle(readParamsChannnel, readParamsHandler);

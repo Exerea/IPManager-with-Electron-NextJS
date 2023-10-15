@@ -33,6 +33,17 @@ const ImageMap: React.FC = () => {
         setPopMessage1(message);
     };
 
+    /**
+     * Electron上Reboot
+     * @param e マウスイベント
+     */
+    const changeConf01 = (e: React.MouseEvent<SVGRectElement>) => {
+        e.preventDefault();
+        window.electronAPI.changeConf01();
+        setIsAnimating(true);
+        setPopMessage1("IP Changed");
+    };
+
     return (
         <div className="flex-grow flex flex-col h-full bg-sumi-800">
             {/* NOTE : viewBox > care for Div Size */}
@@ -103,7 +114,7 @@ const ImageMap: React.FC = () => {
                 <path d="M1143.49 2289.76C1136.75 2289.29 1131 2294.63 1131 2301.39C1131 2307.8 1136.2 2313 1142.61 2313L1243.39 2313C1249.8 2313 1255 2307.8 1255 2301.39C1255 2294.63 1249.25 2289.29 1242.51 2289.76C1229.66 2290.65 1207.71 2292 1193 2292C1178.29 2292 1156.34 2290.65 1143.49 2289.76Z" fill="#007BFF" stroke="#00274C" strokeWidth="4" />
                 <rect x="1381" y="2264" width="376" height="172" rx="7" transform="rotate(-180 1381 2264)" fill="#007BFF" stroke="#00274C" strokeWidth="4" />
                 <rect
-                    onClick={() => process("/api/conf1")}
+                    onClick={changeConf01}
                     id="office"
                     x="465"
                     y="1736"
@@ -120,7 +131,7 @@ const ImageMap: React.FC = () => {
                     onMouseOut={(e) => e.currentTarget.style.fill = 'rgba(65 ,65 ,67, 0.01)'}
                 />
                 <rect
-                    onClick={() => process("/api/conf1")}
+                    onClick={changeConf01}
                     id="conferenceRoom1"
                     x="2068.03"
                     y="220.033"
@@ -132,7 +143,7 @@ const ImageMap: React.FC = () => {
                     onMouseOut={(e) => e.currentTarget.style.fill = '#007BFF'}
                 />
                 <rect
-                    onClick={() => process("/api/conf2")}
+                    onClick={changeConf01}
                     id="conferenceRoom2"
                     x="2908.03"
                     y="220.033"
@@ -144,7 +155,7 @@ const ImageMap: React.FC = () => {
                     onMouseOut={(e) => e.currentTarget.style.fill = '#007BFF'}
                 />
                 <rect
-                    onClick={() => process("/api/conf3")}
+                    onClick={changeConf01}
                     id="conferenceRoom3"
                     x="3748.03"
                     y="220.033"
