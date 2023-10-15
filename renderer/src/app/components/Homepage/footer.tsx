@@ -25,6 +25,16 @@ const Footer = () => {
         setPopMessage1(message);
     };
 
+    /**
+     * Electron上Reboot
+     * @param e マウスイベント
+     */
+    const rebootTeams = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        window.electronAPI.rebootTeams();
+        setIsAnimating(true);
+        setPopMessage1("Now Registing...");
+    };
 
     //ページ遷移
     const router = useRouter();
@@ -38,7 +48,7 @@ const Footer = () => {
             <button onClick={() => process("/api/searchChangeIP")} className="bg-sea-500 hover:bg-sea-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline col-span-3">
                 Search IP address
             </button>
-            <button onClick={() => process("/api/reboot_teams")} className="bg-sea-500 hover:bg-sea-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline col-span-3">
+            <button onClick={rebootTeams} className="bg-sea-500 hover:bg-sea-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline col-span-3">
                 Reboot Teams
             </button>
 

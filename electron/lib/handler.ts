@@ -1,12 +1,44 @@
 import { type IpcMainEvent } from "electron";
 import fs from "fs";
 import path from "path";
+import { exec } from "child_process";
 
 type HandlerWithEvent<
     F extends (...args: never[]) => unknown,
     Event extends IpcMainEvent
 > = (event: Event, ...args: Parameters<F>) => ReturnType<F>;
 
+//-------------------------------------------------------------------------------------
+
+export type RebootTeamsHandler = () => void;
+
+type RebootTeamsHandlerWithEvent = HandlerWithEvent<
+    RebootTeamsHandler,
+    IpcMainEvent
+>;
+
+/**
+ * ファイル書き込みイベント
+ * @param _event マウスクリックイベント
+ */
+export const rebootTeamsHandler: RebootTeamsHandlerWithEvent = (_event) => {
+    // ファイルを読み込む
+    const asarRoot = path.resolve(__dirname);
+    const rebootBat = path.join(
+        asarRoot,
+        "..",
+        "..",
+        "app.asar.unpacked",
+        "extra",
+        "rebootTeams.bat"
+    );
+    console.log(rebootBat);
+    try {
+        exec(rebootBat);
+    } catch (error) {}
+};
+
+//-------------------------------------------------------------------------------------
 export type SendExampleHandler = (
     ipAdress: string,
     subnetmask: string,
@@ -34,8 +66,15 @@ export const sendExampleHandler: SendExampleHandlerWithEvent = (
     console.log(_ipAdress, _subnetMask, _defaultGateway);
 
     // ファイルを読み込む
-    const filePath = path.resolve("./setting.yml");
-    const fileContents = fs.readFileSync(filePath, "utf8");
+    const asarRoot = path.resolve(__dirname);
+    const settingPath = path.join(
+        asarRoot,
+        "..",
+        "..",
+        "app.asar.unpacked",
+        "setting.yml"
+    );
+    const fileContents = fs.readFileSync(settingPath, "utf8");
 
     // YAMLをJavaScriptオブジェクトに変換
     const yaml = require("js-yaml");
@@ -50,5 +89,5 @@ export const sendExampleHandler: SendExampleHandlerWithEvent = (
     const updatedYAML = yaml.dump(settings);
 
     // ファイルの書き込み
-    fs.writeFileSync(filePath, updatedYAML, "utf8");
+    fs.writeFileSync(settingPath, updatedYAML, "utf8");
 };
