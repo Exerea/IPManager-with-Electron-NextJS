@@ -6,12 +6,14 @@ set "INTERFACE=�C�[�T�l�b�g"
 set "arg1=%1"
 set "arg2=%2"
 set "arg3=%3"
-set "subnetmask=%4"
-set "defaultNetWork=%5"
+set "arg4=%4"
+set "arg5=%5"
+set "subnetmask=%6"
+set "defaultNetWork=%7"
 
 
 REM Loop to find Available IP Adess for ping sweeping
-for %%i in (%arg1% %arg2% %arg3%) do (
+for %%i in (%arg1% %arg2% %arg3% %arg4% %arg5%) do (
 
 	echo ******************************************************************************************************
 

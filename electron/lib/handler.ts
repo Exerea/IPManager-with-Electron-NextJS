@@ -103,16 +103,19 @@ type ChangeConf01HandlerWithEvent = HandlerWithEvent<
 // YAMLファイルから名前を読み込む
 // インターフェースを定義
 interface Settings1 {
-    "common-ip": {
+    "conference-room1": {
         [key: string]: {
             ip1: string;
             ip2: string;
             ip3: string;
+            ip4: string;
+            ip5: string;
             snm: string;
             dgw: string;
         };
     };
 }
+
 /**
  * ファイル書き込みイベント
  * @param _event マウスクリックイベント
@@ -132,7 +135,7 @@ export const changeConf01Handler: ChangeConf01HandlerWithEvent = (_event) => {
     const yaml = require("js-yaml");
     var fileContents = fs.readFileSync(settingPath, "utf8");
     const config: Settings1 = yaml.load(fileContents) as Settings1;
-    const data = config["common-ip"]["conference-room1"];
+    const data = config["conference-room1"];
 
     // バッチファイルを実行するコマンドを格納
     const bat = path.join(
@@ -145,7 +148,7 @@ export const changeConf01Handler: ChangeConf01HandlerWithEvent = (_event) => {
     );
 
     // バッチファイルを実行するコマンドを格納
-    const command = `${bat} ${data.ip1} ${data.ip2} ${data.ip3} ${data.snm} ${data.dgw}`;
+    const command = `${bat} ${data.ip1} ${data.ip2} ${data.ip3} ${data.ip4} ${data.ip5} ${data.snm} ${data.dgw}`;
     execSync(command);
 
     //export changed IP
@@ -162,11 +165,13 @@ type ChangeConf02HandlerWithEvent = HandlerWithEvent<
 // YAMLファイルから名前を読み込む
 // インターフェースを定義
 interface Settings2 {
-    "common-ip": {
+    "conference-room2": {
         [key: string]: {
             ip1: string;
             ip2: string;
             ip3: string;
+            ip4: string;
+            ip5: string;
             snm: string;
             dgw: string;
         };
@@ -191,7 +196,7 @@ export const changeConf02Handler: ChangeConf02HandlerWithEvent = (_event) => {
     const yaml = require("js-yaml");
     var fileContents = fs.readFileSync(settingPath, "utf8");
     const config: Settings2 = yaml.load(fileContents) as Settings2;
-    const data = config["common-ip"]["conference-room2"];
+    const data = config["conference-room2"];
 
     // バッチファイルを実行するコマンドを格納
     const bat = path.join(
@@ -204,7 +209,7 @@ export const changeConf02Handler: ChangeConf02HandlerWithEvent = (_event) => {
     );
 
     // バッチファイルを実行するコマンドを格納
-    const command = `${bat} ${data.ip1} ${data.ip2} ${data.ip3} ${data.snm} ${data.dgw}`;
+    const command = `${bat} ${data.ip1} ${data.ip2} ${data.ip3} ${data.ip4} ${data.ip5} ${data.snm} ${data.dgw}`;
     execSync(command);
 
     //export changed IP
@@ -221,11 +226,13 @@ type ChangeConf03HandlerWithEvent = HandlerWithEvent<
 // YAMLファイルから名前を読み込む
 // インターフェースを定義
 interface Settings3 {
-    "common-ip": {
+    "conference-room3": {
         [key: string]: {
             ip1: string;
             ip2: string;
             ip3: string;
+            ip4: string;
+            ip5: string;
             snm: string;
             dgw: string;
         };
@@ -250,7 +257,7 @@ export const changeConf03Handler: ChangeConf03HandlerWithEvent = (_event) => {
     const yaml = require("js-yaml");
     var fileContents = fs.readFileSync(settingPath, "utf8");
     const config: Settings3 = yaml.load(fileContents) as Settings3;
-    const data = config["common-ip"]["conference-room3"];
+    const data = config["conference-room3"];
 
     // バッチファイルを実行するコマンドを格納
     const bat = path.join(
@@ -263,7 +270,7 @@ export const changeConf03Handler: ChangeConf03HandlerWithEvent = (_event) => {
     );
 
     // バッチファイルを実行するコマンドを格納
-    const command = `${bat} ${data.ip1} ${data.ip2} ${data.ip3} ${data.snm} ${data.dgw}`;
+    const command = `${bat} ${data.ip1} ${data.ip2} ${data.ip3} ${data.ip4} ${data.ip5} ${data.snm} ${data.dgw}`;
     execSync(command);
 
     //export changed IP
@@ -280,14 +287,11 @@ type ChangeYourIPHandlerWithEvent = HandlerWithEvent<
 // YAMLファイルから名前を読み込む
 // インターフェースを定義
 interface SettingsYourIP {
-    "common-ip": {
-        [key: string]: {
-            ip1: string;
-            ip2: string;
-            ip3: string;
-            snm: string;
-            dgw: string;
-        };
+    "user-info": {
+        interface: string;
+        ip: string;
+        snm: string;
+        dgw: string;
     };
 }
 /**
@@ -309,7 +313,7 @@ export const changeYourIPHandler: ChangeYourIPHandlerWithEvent = (_event) => {
     const yaml = require("js-yaml");
     var fileContents = fs.readFileSync(settingPath, "utf8");
     const config: SettingsYourIP = yaml.load(fileContents) as SettingsYourIP;
-    const data = config["common-ip"]["conference-room1"]; //TODO
+    const data = config["user-info"];
 
     // バッチファイルを実行するコマンドを格納
     const bat = path.join(
@@ -322,7 +326,7 @@ export const changeYourIPHandler: ChangeYourIPHandlerWithEvent = (_event) => {
     );
 
     // バッチファイルを実行するコマンドを格納
-    const command = `${bat} ${data.ip1} ${data.ip2} ${data.ip3} ${data.snm} ${data.dgw}`;
+    const command = `${bat} ${data.ip} ${data.ip} ${data.ip} ${data.ip} ${data.ip} ${data.snm} ${data.dgw}`;
     execSync(command);
 
     //export changed IP

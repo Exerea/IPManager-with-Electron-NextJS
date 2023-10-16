@@ -32,7 +32,8 @@
   "build": {
     "productName": "IPManager",
     "win": {
-      "requestedExecutionLevel": "requireAdministrator"
+      "requestedExecutionLevel": "requireAdministrator",
+      "icon": "extra/ipmanager.ico"
     },
     "asar": true,
     "files": [
