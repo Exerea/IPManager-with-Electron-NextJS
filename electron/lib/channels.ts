@@ -1,4 +1,6 @@
 export const exampleChannel1 = "test:example1";
+export const searchIPChannel1 = "searchIPChannel1";
+export const changeDesigendIPChannel1 = "changeDesigendIPChannel1";
 export const rebootChannel = "rebootChannel";
 export const changeConf01Channel = "changeConf01Channel";
 export const changeConf02Channel = "changeConf02Channel";

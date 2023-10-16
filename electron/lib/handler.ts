@@ -39,6 +39,33 @@ export const rebootTeamsHandler: RebootTeamsHandlerWithEvent = (_event) => {
 };
 
 //-------------------------------------------------------------------------------------
+
+export type SearchIPHandler = () => void;
+
+type SearchIPHandlerWithEvent = HandlerWithEvent<SearchIPHandler, IpcMainEvent>;
+
+/**
+ * ファイル書き込みイベント
+ * @param _event マウスクリックイベント
+ */
+export const searchIPHandler: SearchIPHandlerWithEvent = (_event) => {
+    // ファイルを読み込む
+    const asarRoot = path.resolve(__dirname);
+    const searchIPBat = path.join(
+        asarRoot,
+        "..",
+        "..",
+        "app.asar.unpacked",
+        "extra",
+        "searchIP.bat"
+    );
+    console.log(searchIPBat);
+    try {
+        exec(searchIPBat);
+    } catch (error) {}
+};
+
+//-------------------------------------------------------------------------------------
 export type SendExampleHandler = (
     ipAdress: string,
     subnetmask: string,
@@ -90,6 +117,49 @@ export const sendExampleHandler: SendExampleHandlerWithEvent = (
 
     // ファイルの書き込み
     fs.writeFileSync(settingPath, updatedYAML, "utf8");
+};
+
+//-------------------------------------------------------------------------------------
+export type ChangeDesigendIPHandler = (
+    ipAdress: string,
+    subnetmask: string,
+    defaultgateway: string
+) => void;
+
+type ChangeDesigendIPHandlerWithEvent = HandlerWithEvent<
+    ChangeDesigendIPHandler,
+    IpcMainEvent
+>;
+
+/**
+ * ファイル書き込みイベント
+ * @param _event マウスクリックイベント
+ * @param ipAdress レンダラープロセスから受け取ったメッセージ
+ * @param subnetmask レンダラープロセスから受け取ったサブネットマスク
+ * @param defaultgateway レンダラープロセスから受け取ったデフォルトゲートウェイ
+ */
+export const changeDesigendIPHandler: ChangeDesigendIPHandlerWithEvent = (
+    _ipAdress,
+    _defaultGateway,
+    _subnetMask
+) => {
+    console.log(_ipAdress, _subnetMask, _defaultGateway);
+
+    const asarRoot = path.resolve(__dirname);
+
+    // バッチファイルを実行するコマンドを格納
+    const bat = path.join(
+        asarRoot,
+        "..",
+        "..",
+        "app.asar.unpacked",
+        "extra",
+        "changeIP.bat"
+    );
+
+    // バッチファイルを実行するコマンドを格納
+    const command = `${bat} ${_ipAdress} ${_ipAdress} ${_ipAdress} ${_ipAdress} ${_ipAdress} ${_defaultGateway} ${_subnetMask}`;
+    execSync(command);
 };
 
 //-------------------------------------------------------------------------------------

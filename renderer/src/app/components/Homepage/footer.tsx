@@ -11,24 +11,16 @@ const Footer = () => {
     const [isAnimating, setIsAnimating] = useRecoilState(animationState);
     const [popMessage1, setPopMessage1] = useRecoilState(messageState1);
 
-    const process = async (path: string) => {
-
-        const response = await fetch(path, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-        });
-
-        const data = await response.json();
-        setIsAnimating(true);
-
-        const message = data.message;
-        setPopMessage1(message);
-    };
-
     /**
      * Electron上Reboot
      * @param e マウスイベント
      */
+    const searchIP = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        window.electronAPI.searchIP();
+        setIsAnimating(true);
+        setPopMessage1("Now Searching...");
+    };
     const rebootTeams = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         window.electronAPI.rebootTeams();
@@ -45,7 +37,7 @@ const Footer = () => {
 
     return (
         <footer className="w-full h-20 bg-sumi-900 grid grid-cols-12 items-center gap-4 p-4">
-            <button onClick={() => process("/api/searchChangeIP")} className="bg-sea-500 hover:bg-sea-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline col-span-3">
+            <button onClick={searchIP} className="bg-sea-500 hover:bg-sea-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline col-span-3">
                 Search IP address
             </button>
             <button onClick={rebootTeams} className="bg-sea-500 hover:bg-sea-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline col-span-3">

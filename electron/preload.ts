@@ -6,11 +6,19 @@ import {
     changeConf03Channel,
     changeYourIPChannel,
     rebootChannel,
+    searchIPChannel1,
+    changeDesigendIPChannel1,
 } from "./lib/channels";
 
 contextBridge.exposeInMainWorld("electronAPI", {
     sendExample: (...args: readonly unknown[]): void => {
         ipcRenderer.send(exampleChannel1, ...args);
+    },
+    searchIP: (...args: readonly unknown[]): void => {
+        ipcRenderer.send(searchIPChannel1, ...args);
+    },
+    changeDesignedIP: (...args: readonly unknown[]): void => {
+        ipcRenderer.send(changeDesigendIPChannel1, ...args);
     },
     changeConf01: (...args: readonly unknown[]): void => {
         ipcRenderer.send(changeConf01Channel, ...args);

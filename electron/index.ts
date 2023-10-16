@@ -9,18 +9,22 @@ import {
     changeConf01Channel,
     changeConf02Channel,
     changeConf03Channel,
+    changeDesigendIPChannel1,
     changeYourIPChannel,
     exampleChannel1,
     readParamsChannnel,
     rebootChannel,
+    searchIPChannel1,
 } from "./lib/channels";
 import {
     changeConf01Handler,
     changeConf02Handler,
     changeConf03Handler,
+    changeDesigendIPHandler,
     changeYourIPHandler,
     readParamsHandler,
     rebootTeamsHandler,
+    searchIPHandler,
     sendExampleHandler,
 } from "./lib/handler";
 import { registerProtocol, protocolInfo } from "./lib/custom-protocol";
@@ -133,6 +137,8 @@ app.on("web-contents-created", (_event, contents) => {
 
 // example of send from renderer
 ipcMain.on(exampleChannel1, sendExampleHandler);
+ipcMain.on(searchIPChannel1, searchIPHandler);
+ipcMain.on(changeDesigendIPChannel1, changeDesigendIPHandler);
 ipcMain.on(changeConf01Channel, changeConf01Handler);
 ipcMain.on(changeConf02Channel, changeConf02Handler);
 ipcMain.on(changeConf03Channel, changeConf03Handler);
