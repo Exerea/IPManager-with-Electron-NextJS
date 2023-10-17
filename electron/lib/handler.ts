@@ -60,8 +60,9 @@ export const searchIPHandler: SearchIPHandlerWithEvent = (_event) => {
         "searchIP.bat"
     );
     console.log(searchIPBat);
+    const command = `${searchIPBat} イーサネット`;
     try {
-        exec(searchIPBat);
+        exec(command);
     } catch (error) {}
 };
 

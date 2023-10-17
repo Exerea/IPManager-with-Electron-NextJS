@@ -85,7 +85,7 @@ app.on("ready", async () => {
     });
 
     //開発者ツールの許可
-    mainWindow.webContents.openDevTools();
+    // mainWindow.webContents.openDevTools();
 
     //Window展開先
     if (app.isPackaged) {

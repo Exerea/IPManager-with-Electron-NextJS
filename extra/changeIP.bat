@@ -2,7 +2,7 @@
 @echo off
 setlocal enabledelayedexpansion
 
-set "INTERFACE=ï¿½Cï¿½[ï¿½Tï¿½lï¿½bï¿½g"
+set "inter=ƒC[ƒTƒlƒbƒg"
 set "arg1=%1"
 set "arg2=%2"
 set "arg3=%3"
@@ -31,11 +31,11 @@ for %%i in (%arg1% %arg2% %arg3% %arg4% %arg5%) do (
 	echo 	Passed Ping Check
 	echo 	Trying netsh ...
 
-	netsh interface ip set address name=%INTERFACE% static !current! %subnetmask% %defaultNetWork%
+	netsh interface ip set address name=%inter% static !current! %subnetmask% %defaultNetWork%
 	set NETSHERROR=!ERRORLEVEL!
 
 	:: Get New Address
-	for /f "tokens=2 delims=:" %%b in ('ipconfig ^| find "IPv4 ï¿½Aï¿½hï¿½ï¿½ï¿½X"') do (
+	for /f "tokens=2 delims=:" %%b in ('ipconfig ^| find "IPv4 ƒAƒhƒŒƒX"') do (
 		set CURRENT_IP=%%b
 	)
 
@@ -53,12 +53,12 @@ for %%i in (%arg1% %arg2% %arg3% %arg4% %arg5%) do (
         )
 	
 	echo ----------------------------------------------------------------------------------------------------
-	echo 	Couldnt connect		: %INTERFACE% , !current! , %subnetmask% , %defaultNetWork%
+	echo 	Couldnt connect		: %inter% , !current! , %subnetmask% , %defaultNetWork%
 
     	) else (
 	
 	echo ----------------------------------------------------------------------------------------------------
-	echo 	Already Used 		: %INTERFACE% , !current! , %subnetmask% , %defaultNetWork%
+	echo 	Already Used 		: %inter% , !current! , %subnetmask% , %defaultNetWork%
 	)
 )
 echo Pls search IP > result.txt

@@ -5,7 +5,7 @@ REM Search Area
 	set "base_ip=10.62.30."
 	set "subnetmask=255.255.255.0"
 	set "defaultNetWork=10.62.30.254"
-	set "INTERFACE=%0"
+	set "inter=%0"
 
 REM Loop to find Available IP Adess for ping sweeping
 	for /l %%i in (2, 1, 254) do (
@@ -27,10 +27,10 @@ REM Loop to find Available IP Adess for ping sweeping
 	echo 	Passed Ping Check
 	echo 	Trying netsh ...
 
-	netsh interface ip set address name="ã‚¤ãƒ¼ã‚µãƒãƒƒãƒˆ" static !current! %subnetmask% %defaultNetWork%
+	netsh interface ip set address name="ƒC[ƒTƒlƒbƒg" static !current! %subnetmask% %defaultNetWork%
 
 	:: Get New Address
-	for /f "tokens=2 delims=:" %%b in ('ipconfig ^| find "IPv4 ã‚¢ãƒ‰ãƒ¬ã‚¹"') do (
+	for /f "tokens=2 delims=:" %%b in ('ipconfig ^| find "IPv4 ƒAƒhƒŒƒX"') do (
 		set CURRENT_IP=%%b
 	)
 
@@ -39,7 +39,7 @@ REM Loop to find Available IP Adess for ping sweeping
 
 
 	::try to connect the address
-	REM netsh interface ip set address "ã‚¤ãƒ¼ã‚µãƒãƒƒãƒˆ" static !current! %subnetmask% %defaultNetWork% > output.txt 2>&1
+	REM netsh interface ip set address "ƒC[ƒTƒlƒbƒg" static !current! %subnetmask% %defaultNetWork% > output.txt 2>&1
 
         ::no error
         if !ERRORLEVEL! equ 0 (
@@ -52,12 +52,12 @@ REM Loop to find Available IP Adess for ping sweeping
         )
 	
 	echo --------------------------------------------------
-	echo 	Couldnt connect		: %INTERFACE% , !current! , %subnetmask% , %defaultNetWork%
+	echo 	Couldnt connect		: %inter% , !current! , %subnetmask% , %defaultNetWork%
 
     	) else (
 	
 	echo --------------------------------------------------
-	echo 	Already Used 		: %INTERFACE% , !current! , %subnetmask% , %defaultNetWork%
+	echo 	Already Used 		: %inter% , !current! , %subnetmask% , %defaultNetWork%
 	)
 )
 echo Not found > result.txt
