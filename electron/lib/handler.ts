@@ -87,8 +87,8 @@ type SendExampleHandlerWithEvent = HandlerWithEvent<
 export const sendExampleHandler: SendExampleHandlerWithEvent = (
     _event,
     _ipAdress,
-    _defaultGateway,
-    _subnetMask
+    _subnetMask,
+    _defaultGateway
 ) => {
     console.log(_ipAdress, _subnetMask, _defaultGateway);
 
@@ -140,8 +140,8 @@ type ChangeDesigendIPHandlerWithEvent = HandlerWithEvent<
  */
 export const changeDesigendIPHandler: ChangeDesigendIPHandlerWithEvent = (
     _ipAdress,
-    _defaultGateway,
-    _subnetMask
+    _subnetMask,
+    _defaultGateway
 ) => {
     console.log(_ipAdress, _subnetMask, _defaultGateway);
 
