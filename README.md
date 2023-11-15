@@ -1,45 +1,65 @@
-# IPManager-with-Electron-NextJS
+![header](/docs/img/header.png)
 
-Electron app is rendered by NextJS with App router
+## What's IPManager ?
 
-using:
+#### ■ IPManager は円滑な会議準備を支援するデスクトップアプリケーションです。
 
-- package-build: [electron-builder](https://github.com/electron-userland/electron-builder)
-    - cross platform build(Linux, Windows)
-- renderer: [nextjs](https://nextjs.org/)
-    - [App Router](https://nextjs.org/docs/app)
-    - (static multi-page application)
-- node package manager: [pnpm](https://pnpm.io/)
-    - keep each [workspace](https://pnpm.io/workspaces) loose coupling & clean by minimizing packages hoisting
+- Next.js(App Router)でレンダリングされた Electron アプリケーションです。
+- 使用端末の LAN 設定の変更・コミュニケーションツールの起動等の機能を有しています。
+- イメージマップから使用する会議スペースを選択し、指定地点のネットワーク設定に変更します。
 
-## usage
+### ※マニュアル代わりに簡単に公式紹介サイトを作成しました!
 
-### Requirements
+#### [紹介サイト　 IPManager](https://ipmanager-website.vercel.app/)
 
-- Linux(development environment)
-- Node.js(v18.x)
-    - package manager: pnpm (v8.6.x or later)
-- Docker & docker-compose (building for Windows)
 
-### CLI
+## Sample Image
+![SampleView](/docs/img/handleimage.png)
 
-development:
+## Solution
+
+#### ■ 以下のような課題を確認し、改善に取り組めないか検討しました。
+
+#### 要約：会議スペース移動の度に　好調でも 3 分 ～ 不調時は 10 分以上　の業務時間を奪います。
+- 会議室の名称が直感的でなく、部屋の特徴もなく構成は似ている。部屋の場所のイメージと結びつかない。
+  - 問題例 1 : 「会議室 D」と聞いただけでは「フロア右奥」の会議室と分からない。
+  - 問題例 2 : 会議スペースは複数あり、入った会議室名を思い出せず、部屋の名札を確認しにいく。
+- 指定の接続設定(IP アドレスなど)が会議室ごとに定められており、手動で変更するには非常に手間がかかる。
+- 変更を面倒に感じた隣室の会議室利用者が、不正な設定のまま使用し、接続が奪取されていて接続できない場合がある。また、接続が奪われているのか？ルーターが不調なのか？の判別ができない。
+- 自席で端末を使用する為に再度設定を戻す必要があり、すぐに通常業務に戻れない。
+- 接続情報を変更した後は、通話アプリケーションが不調になりやすい。
+
+
+#### ■ これらの問題を解決すべく、以下のデスクトップアプリケーションの機能を実装しました。
+
+- クリッカブルなオフィスのイメージマップを挿入するフォームを実装し、直感的な シンプルUI を構築する。
+  - スペースをクリックした、指定地点のネットワーク接続に端末情報を更新する。
+  - 変更された旨を伝えるアニメーションを実装し、変更可否をユーザーに通知する。
+  - 変更予定の値が使用不可だった場合、空きアドレスの検索を行い、動的に接続情報を更新するリカバリー処理を行う。
+  - 接続不可だった場合は、その旨を通知する。
+- 自席に戻った場合等のために、ユーザーの任意の設定を登録するフォームを実装する。
+- 通話アプリをリブートする機能を付属させる。
+
+## Tech
+
+- Package Builder: [electron-builder](https://github.com/electron-userland/electron-builder)
+- Renderer: [Nextjs](https://nextjs.org/)
+  - [App Router](https://nextjs.org/docs/app)
+- Node Package Manager: [pnpm](https://pnpm.io/)
+
+## Usage
+
+- Development:
 
 ```bash
 # use localhost:3000
 pnpm dev
 
-# to stop, Ctrl + C
 ```
 
-build app-package:
+- Building App:
 
 ```bash
 # build package dir: dist/
-
-# for Linux
 pnpm dist
-
-# for Windows(using docker container)
-pnpm dist:win
 ```
