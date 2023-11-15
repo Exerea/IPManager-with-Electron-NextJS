@@ -2,9 +2,9 @@
 setlocal enabledelayedexpansion
 
 REM Search Area
-	set "base_ip=10.62.30."
+	set "base_ip=192.168.1."
 	set "subnetmask=255.255.255.0"
-	set "defaultNetWork=10.62.30.254"
+	set "defaultNetWork=192.168.1.254"
 	set "inter=%0"
 
 REM Loop to find Available IP Adess for ping sweeping
